@@ -38,6 +38,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 //	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest requestw) {
 	public final ResponseEntity<Object> handleAllExceptions(Exception ex, HttpServletRequest request,
 			WebRequest requestw) {
+		
 		System.out.println("\n\n handleAllExceptions");
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
