@@ -1,5 +1,6 @@
 package spring.boot.exception.handling.error;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -16,7 +17,11 @@ import lombok.Setter;
 public class ErrorResponse {
 
 	private String message;
+	
+	private LocalDateTime date;
 
+	private String requestedURI;
+	
 	private List<String> details;
 
 }
