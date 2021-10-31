@@ -1,12 +1,11 @@
 package spring.boot.exception.handling.error.exception;
 
-//import org.springframework.http.HttpStatus;
-//import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
  
-//@ResponseStatus(HttpStatus.NOT_FOUND)
+// Annotate the Exception class with @ResponseStatus indicate in the value property the desired response HTTP status code.
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class RecordNotFoundException extends RuntimeException {
-
-	private static final long serialVersionUID = 1L;
 
 	public RecordNotFoundException() {
     }
@@ -14,5 +13,7 @@ public class RecordNotFoundException extends RuntimeException {
 	public RecordNotFoundException(final String exception) {
         super(exception);
     }
+
+	private static final long serialVersionUID = 1L;
 
 }

@@ -22,15 +22,18 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import spring.boot.exception.handling.error.ErrorResponse;
+import spring.boot.exception.handling.error.exception.NoSuchElementFoundException;
 import spring.boot.exception.handling.error.exception.RecordNotFoundException;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-	
+
 	// Example to have a method to generate all equal bodys
 	// https://www.it-swarm-es.com/es/java/como-detectar-todas-las-excepciones-no-controladas-es-decir-sin-exceptionhandler-existente-en-spring-mvc/837828213/
 
+	// https://www.toptal.com/java/spring-boot-rest-api-error-handling
+	
 	@ExceptionHandler(Exception.class)
 //	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest requestw) {
 	public final ResponseEntity<Object> handleAllExceptions(Exception ex, HttpServletRequest request,
@@ -63,7 +66,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
-	public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex, HttpServletRequest request) {
+	public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex,
+			HttpServletRequest request) {
 		System.out.println("\n\n handleIllegalArgumentException");
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
@@ -75,10 +79,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		error.setRequestedURI(request.getRequestURI());
 		return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
-    	System.out.println("\n\n handleIllegalArgumentException");
+
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+		System.out.println("\n\n handleIllegalArgumentException");
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 		ErrorResponse error = new ErrorResponse();
@@ -88,20 +92,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		error.setDetails(details);
 		error.setRequestedURI(request.getRequestURI());
 		return new ResponseEntity(error, HttpStatus.FORBIDDEN);
-    }
-
-	@ExceptionHandler(RecordNotFoundException.class)
-	public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
-		System.out.println("\n\n handleUserNotFoundException");
-		List<String> details = new ArrayList<>();
-		details.add(ex.getLocalizedMessage());
-		ErrorResponse error = new ErrorResponse();
-		LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), LocalTime.now());
-		error.setDate(dateTime);
-		error.setMessage("Record Not Found");
-		error.setDetails(details);
-		error.setRequestedURI(ex.getLocalizedMessage());
-		return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 	}
 
 	@Override
@@ -135,6 +125,31 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		error.setRequestedURI(ex.getLocalizedMessage());
 		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler(RecordNotFoundException.class)
+	public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
+		System.out.println("\n\n handleUserNotFoundException");
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		ErrorResponse error = new ErrorResponse();
+		LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), LocalTime.now());
+		error.setDate(dateTime);
+		error.setMessage("Record Not Found");
+		error.setDetails(details);
+		error.setRequestedURI(ex.getLocalizedMessage());
+		return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(NoSuchElementFoundException.class)
+	public ResponseEntity<String> handleNoSuchElementFoundException2(
+			NoSuchElementFoundException exception,
+			HttpServletRequest httpServletRequest,
+			HttpHeaders headers,
+			HttpStatus status,
+			WebRequest request) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+	}
+
 
 //	@RestControllerAdvice
 //	public class ExceptionTranslator {
