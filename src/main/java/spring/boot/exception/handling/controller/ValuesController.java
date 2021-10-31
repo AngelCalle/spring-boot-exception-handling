@@ -13,12 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ValuesController {
-	
-//	Documentacion
-//	https://howtodoinjava.com/spring-boot2/spring-rest-request-validation/
-//	https://howtodoinjava.com/spring-boot2/spring-rest-request-validation/
-//	https://reflectoring.io/bean-validation-with-spring-boot/
-	
+
 	// http://localhost:8080/validatePathVariable/2 false
 	// http://localhost:8080/validatePathVariable/5 true
 	@GetMapping("/validatePathVariable/{id}")
