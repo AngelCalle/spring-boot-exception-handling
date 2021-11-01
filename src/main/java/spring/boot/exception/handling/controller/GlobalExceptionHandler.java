@@ -18,6 +18,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -148,6 +150,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers,
 			HttpStatus status,
 			WebRequest request) {
+		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 	}
 
@@ -165,4 +168,94 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 //	        (...)
 //	    }
 //	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/**
+ * Estas excepciones eredan de RuntimeException son un error de programacion
+ * estas excepciones se pueden lanzar son necesidad de implementar un try catch
+ * por lo que es mas sencillo de implementar
+ *  throy new NotFoundUserIdException("");
+ */
+	
+	
+	
+	
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ExceptionHandler({NotFoundUserIdException.class})
+//    @ResponseBody
+//    public ErrorMessage notFoundRequest(Exception exception) {
+//        ErrorMessage errorMessage = new ErrorMessage(exception);
+//        LogManager.getLogger(this.getClass()).info("  ERROR: NOT_FOUND, " + errorMessage);
+//        return errorMessage;
+//    }
+//
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+//    @ExceptionHandler({UnauthorizedException.class})
+//    public void unauthorized(Exception exception) {
+//        ErrorMessage errorMessage = new ErrorMessage(exception);
+//        LogManager.getLogger(this.getClass()).info("  ERROR: UNAUTHORIZED, " + errorMessage);
+//    }
+//
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler({MalformedHeaderException.class})
+//    @ResponseBody
+//    public ErrorMessage badRequest(Exception exception) {
+//        ErrorMessage errorMessage = new ErrorMessage(exception);
+//        LogManager.getLogger(this.getClass()).info("  ERROR: BAD_REQUEST, " + errorMessage);
+//        return new ErrorMessage(exception);
+//    }
+//
+	
+//    @ResponseStatus(HttpStatus.FORBIDDEN)
+//    @ExceptionHandler({
+//            ForbiddenException.class
+//    })
+//    @ResponseBody
+//    public ErrorMessage forbidden(Exception exception) {
+//        return new ErrorMessage(exception, HttpStatus.FORBIDDEN.value());
+//    }
+//    @ResponseStatus(HttpStatus.CONFLICT)
+//    @ExceptionHandler({
+//            ConflictException.class
+//    })
+//    @ResponseBody
+//    public ErrorMessage conflict(Exception exception) {
+//        return new ErrorMessage(exception);
+//    }
+//
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler({
+//            Exception.class
+//    })
+//	    @ResponseBody
+//    public ErrorMessage exception(HttpServletRequest request, Exception exception) {
+//        exception.printStackTrace();
+//        return new ErrorMessage(exception);
+//    }
+////
+//    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+//    @ExceptionHandler({
+//            BadGatewayException.class
+//    })
+//    @ResponseBody
+//    public ErrorMessage badGateway(Exception exception) {
+//        return new ErrorMessage(exception, HttpStatus.BAD_GATEWAY.value());
+//    }
+////	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
