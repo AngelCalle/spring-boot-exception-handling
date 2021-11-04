@@ -206,7 +206,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			details.add(item.getMessage());
 		}
 
-		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
+		return buildResponseEntity(HttpStatus.BAD_REQUEST,
 				new RuntimeException("Error ConstraintViolationException."), details, request.getRequestURI());
 	}
 
@@ -227,7 +227,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("Error RecordNotFoundException."),
+		return buildResponseEntity(HttpStatus.NOT_FOUND, new RuntimeException("Error RecordNotFoundException."),
 				details, ex.getLocalizedMessage());
 	}
 
@@ -237,7 +237,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 
-		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
+		return buildResponseEntity(HttpStatus.BAD_REQUEST,
 				new RuntimeException("Error AccessDeniedException."), details, request.getRequestURI());
 	}
 
@@ -253,13 +253,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler({ RuntimeException.class })
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	protected ResponseEntity<Object> handleRuntimeException(RuntimeException ex, HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("Error RuntimeException."), details,
+		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, new RuntimeException("Error RuntimeException."), details,
 				request.getContextPath());
 	}
 
@@ -271,7 +270,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("Error AuthenticationException."),
+		return buildResponseEntity(HttpStatus.UNAUTHORIZED, new RuntimeException("Error AuthenticationException."),
 				details, request.getContextPath());
 	}
 
@@ -301,7 +300,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("Error MalformedHeaderException."),
+		return buildResponseEntity(HttpStatus.CONFLICT, new RuntimeException("Error MalformedHeaderException."),
 				details, request.getContextPath());
 	}
 
@@ -343,7 +342,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_GATEWAY, new RuntimeException("Error EntityNotFoundException."),
+		return buildResponseEntity(HttpStatus.NO_CONTENT, new RuntimeException("Error EntityNotFoundException."),
 				details, request.getContextPath());
 	}
 
