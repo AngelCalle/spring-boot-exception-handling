@@ -40,7 +40,6 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-
 import org.apache.tomcat.websocket.AuthenticationException;
 import spring.boot.exception.handling.error.ErrorResponse;
 import spring.boot.exception.handling.error.exception.BadGatewayException;
@@ -60,69 +59,74 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error HttpRequestMethodNotSupportedException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-
 		List<String> details = new ArrayList<>();
 		details.add("Unsupported content type: " + ex.getContentType());
 		details.add("Supported content types: " + MediaType.toString(ex.getSupportedMediaTypes()));
-
 		return buildResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE,
-				new RuntimeException("Error de inicio de sesión, nombre de usuario o contraseña incorrectos"), details,
-				ex.getLocalizedMessage());
+				new RuntimeException("Error HttpMediaTypeNotSupportedException."), details, ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error HttpMediaTypeNotAcceptableException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error MissingPathVariableException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error MissingServletRequestParameterException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleServletRequestBindingException(ServletRequestBindingException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error ServletRequestBindingException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleConversionNotSupported(ConversionNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error ConversionNotSupportedException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error TypeMismatchException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		// "Malformed JSON request"
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error HttpMessageNotReadableException, Malformed JSON request."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error HttpMessageNotWritableException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -134,65 +138,65 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 
 		return buildResponseEntity(HttpStatus.BAD_REQUEST,
-				new RuntimeException("Server Error handleConstraintViolationException."), details,
-				ex.getLocalizedMessage());
+				new RuntimeException("Error MethodArgumentNotValidException."), details, ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleMissingServletRequestPart(MissingServletRequestPartException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error MissingServletRequestPartException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
 			WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error BindException."), null, ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error NoHandlerFoundException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error AsyncRequestTimeoutException."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest webRequest) {
-		return buildResponseEntity(status, ex, null, ex.getLocalizedMessage());
+		return buildResponseEntity(status, new RuntimeException("Error ExceptionInternal."), null,
+				ex.getLocalizedMessage());
 	}
 
 	@ExceptionHandler({ Exception.class })
-	public final ResponseEntity<Object> handleAllExceptions(Exception ex, HttpServletRequest request,
+	protected ResponseEntity<Object> handleAllExceptions(Exception ex, HttpServletRequest request,
 			WebRequest webRequest) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 
-		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
-				new RuntimeException("Se presento un problema, reporte e intente luego."), details,
+		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, new RuntimeException("Error Exception."), details,
 				request.getRequestURI());
 	}
 
 	@ExceptionHandler({ Throwable.class })
-	public ResponseEntity<Object> handleThrowable(final Throwable ex, HttpServletRequest request) {
-
+	protected ResponseEntity<Object> handleThrowable(Throwable ex, HttpServletRequest request) {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.NOT_FOUND,
-				new RuntimeException("Server Error handleConstraintViolationException"), details,
+		return buildResponseEntity(HttpStatus.NOT_FOUND, new RuntimeException("Error Throwable."), details,
 				request.getContextPath());
 	}
 
 	@ExceptionHandler({ ConstraintViolationException.class })
-	public final ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,
+	protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,
 			HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
@@ -203,161 +207,154 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 
 		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
-				new RuntimeException("Server Error handleConstraintViolationException"), details,
-				request.getRequestURI());
+				new RuntimeException("Error ConstraintViolationException."), details, request.getRequestURI());
 	}
 
 	@ExceptionHandler({ IllegalArgumentException.class })
-	public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex,
+	protected ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex,
 			HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 
 		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
-				new RuntimeException("Server Error handleConstraintViolationException"), details,
-				request.getRequestURI());
+				new RuntimeException("Error IllegalArgumentException."), details, request.getRequestURI());
 	}
 
 	@ExceptionHandler({ RecordNotFoundException.class })
-	public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest webRequest) {
+	protected ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest webRequest) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST,
-				new RuntimeException("Server Error handleConstraintViolationException"), details,
-				ex.getLocalizedMessage());
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("Error RecordNotFoundException."),
+				details, ex.getLocalizedMessage());
 	}
 
 	@ExceptionHandler({ AccessDeniedException.class })
-	public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+	protected ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 
 		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
-				new RuntimeException("Server Error handleConstraintViolationException"), details,
-				request.getRequestURI());
+				new RuntimeException("Error AccessDeniedException."), details, request.getRequestURI());
 	}
 
 	@ExceptionHandler({ NoSuchElementFoundException.class })
-	public ResponseEntity<Object> handleNoSuchElementFoundException2(NoSuchElementFoundException ex,
+	protected ResponseEntity<Object> handleNoSuchElementFoundException2(NoSuchElementFoundException ex,
 			HttpServletRequest httpServletRequest, HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(status, new RuntimeException("Server Error handleConstraintViolationException"),
-				details, webRequest.getContextPath());
+		return buildResponseEntity(status, new RuntimeException("Error NoSuchElementFoundException."), details,
+				webRequest.getContextPath());
 	}
 
 	@ExceptionHandler({ RuntimeException.class })
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ResponseEntity<Object> handleRuntimeException(RuntimeException ex, HttpServletRequest request) {
+	protected ResponseEntity<Object> handleRuntimeException(RuntimeException ex, HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("An internal server error occurred"),
-				details, request.getContextPath());
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("Error RuntimeException."), details,
+				request.getContextPath());
 	}
 
 	@ResponseBody
 	@ExceptionHandler({ AuthenticationException.class })
-	public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex,
+	protected ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex,
 			HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST,
-				new RuntimeException("Error de inicio de sesión, nombre de usuario o contraseña incorrectos"), details,
-				request.getContextPath());
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("Error AuthenticationException."),
+				details, request.getContextPath());
 	}
 
 	@ExceptionHandler({ NotFoundUserIdException.class })
-	public ResponseEntity<Object> handleNotFoundUserIdException(Exception ex, HttpServletRequest request) {
+	protected ResponseEntity<Object> handleNotFoundUserIdException(Exception ex, HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.NOT_FOUND, new RuntimeException("  ERROR: NOT_FOUND, "), details,
+		return buildResponseEntity(HttpStatus.NOT_FOUND, new RuntimeException("Error NotFoundUserIdException."), details,
 				request.getContextPath());
 	}
 
 	@ExceptionHandler({ UnauthorizedException.class })
-	public ResponseEntity<Object> handleUnauthorizedException(Exception ex, HttpServletRequest request) {
+	protected ResponseEntity<Object> handleUnauthorizedException(Exception ex, HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.UNAUTHORIZED, new RuntimeException("  ERROR: UNAUTHORIZED, "), details,
-				request.getContextPath());
+		return buildResponseEntity(HttpStatus.UNAUTHORIZED, new RuntimeException("Error UnauthorizedException."),
+				details, request.getContextPath());
 	}
 
 	@ExceptionHandler({ MalformedHeaderException.class })
-	public ResponseEntity<Object> handleMalformedHeaderException(Exception ex, HttpServletRequest request) {
+	protected ResponseEntity<Object> handleMalformedHeaderException(Exception ex, HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("  ERROR: BAD_REQUEST, "), details,
-				request.getContextPath());
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, new RuntimeException("Error MalformedHeaderException."),
+				details, request.getContextPath());
 	}
 
 	@ExceptionHandler({ ForbiddenException.class })
-	public ResponseEntity<Object> handleForbiddenException(Exception ex, HttpServletRequest request) {
+	protected ResponseEntity<Object> handleForbiddenException(Exception ex, HttpServletRequest request) {
 
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.FORBIDDEN, new RuntimeException("  ERROR: FORBIDDEN, "), details,
-				request.getContextPath());
+		return buildResponseEntity(HttpStatus.FORBIDDEN, new RuntimeException("Error MalformedHeaderException."),
+				details, request.getContextPath());
 	}
 
 	@ExceptionHandler({ ConflictException.class })
-	public ResponseEntity<Object> handleConflictException(Exception ex, HttpServletRequest request) {
+	protected ResponseEntity<Object> handleConflictException(Exception ex, HttpServletRequest request) {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.CONFLICT, new RuntimeException("  ERROR: CONFLICT, "), details,
+		return buildResponseEntity(HttpStatus.CONFLICT, new RuntimeException("Error ConflictException."), details,
 				request.getContextPath());
 	}
 
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_GATEWAY)
 	@ExceptionHandler({ BadGatewayException.class })
-	public ResponseEntity<Object> handleBadGatewayException(Exception ex, HttpServletRequest request) {
+	protected ResponseEntity<Object> handleBadGatewayException(Exception ex, HttpServletRequest request) {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
 
-		return buildResponseEntity(HttpStatus.BAD_GATEWAY, new RuntimeException("  ERROR: BAD_GATEWAY, "), details,
+		return buildResponseEntity(HttpStatus.BAD_GATEWAY, new RuntimeException("Error BadGatewayException."), details,
 				request.getContextPath());
 	}
-	
+
 	// throw new EntityNotFoundException(Bird.class, "id", birdId.toString());
 	@ExceptionHandler(EntityNotFoundException.class)
-	protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
-		   // "message": "Bird was not found for parameters {id=2}"
+	protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex,
+			HttpServletRequest request) {
+		// "message": "Bird was not found for parameters {id=2}"
 		List<String> details = new ArrayList<>();
 		details.add(ex.getMessage());
-	    
-		return buildResponseEntity(
-				HttpStatus.BAD_GATEWAY,
-				new RuntimeException("  ERROR: BAD_GATEWAY, "),
-				details,
-				request.getContextPath());
+
+		return buildResponseEntity(HttpStatus.BAD_GATEWAY, new RuntimeException("Error EntityNotFoundException."),
+				details, request.getContextPath());
 	}
-	
+
 	private ResponseEntity<Object> buildResponseEntity(HttpStatus httpStatus, Exception exc, List<String> errors,
 			String uri) {
 
 		ErrorResponse error = new ErrorResponse();
 		error.setStatus(httpStatus.value());
-		error.setCode(123);
+		error.setCode("C123");
 		error.setTimestamp(LocalDateTime.of(LocalDate.now(), LocalTime.now()));
-		error.setMessage("USRMSG-" + exc.getMessage());
+		error.setMessage("MSG-" + exc.getMessage());
 		error.setRequestedURI(uri);
 		error.setDetails(errors);
 		return new ResponseEntity<>(error, httpStatus);

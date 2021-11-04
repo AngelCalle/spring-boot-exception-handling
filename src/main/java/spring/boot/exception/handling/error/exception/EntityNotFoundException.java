@@ -1,6 +1,5 @@
 package spring.boot.exception.handling.error.exception;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -8,7 +7,9 @@ import java.util.stream.IntStream;
 import org.springframework.util.StringUtils;
 
 public class EntityNotFoundException extends RuntimeException {
+	
 	private static final long serialVersionUID = 1L;
+	
     public EntityNotFoundException(Class<?> clazz, String... searchParamsMap) {
         super(EntityNotFoundException.generateMessage(clazz.getSimpleName(), toMap(String.class, String.class, searchParamsMap)));
     }

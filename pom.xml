@@ -23,15 +23,15 @@
 	</properties>
 	
 	<dependencies>
-<!-- 		Este paquete usa anotaciones@JsonFormatConvierta las clases de fecha y hora de Java 8 a JSON: -->
+		<!-- This package uses @ JsonFormat annotations Convert Java 8 date and time classes to JSON: -->
 		<dependency>
-		   <groupId>com.fasterxml.jackson.datatype</groupId>
-		   <artifactId>jackson-datatype-jsr310</artifactId>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 
 		<dependency>
-		    <groupId>javax.xml.bind</groupId>
-		    <artifactId>jaxb-api</artifactId>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
 		</dependency>
 
 		<dependency>

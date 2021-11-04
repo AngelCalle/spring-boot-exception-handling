@@ -22,7 +22,7 @@ public class ErrorResponse {
 	private Integer status;
 	
 	// Codigo propio del api
-	private Integer code;
+	private String code;
 
 	// Contiene la fecha y la hora en que ocurrió el error.
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
