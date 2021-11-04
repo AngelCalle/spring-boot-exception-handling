@@ -7,14 +7,12 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,7 +50,7 @@ public class ValuesController {
 	// http://localhost:8080/employees?param=5 false
 	// http://localhost:8080/employees?id=5 true
 	@GetMapping(value = "/employees")
-	public ResponseEntity<String> addEmployee(@Valid @RequestParam(name = "id") String fooId) {
+	public ResponseEntity<String> addEmployee(@RequestParam(name = "id") String fooId) {
 		return ResponseEntity.ok("valid");
 	}
 
@@ -61,7 +59,7 @@ public class ValuesController {
 	// http://localhost:8080/caramelo?id=DD false
 	// http://localhost:8080/caramelo?id=D true
 	@GetMapping("/caramelo")
-	public ResponseEntity<String> getFoos(@RequestParam(required = true) @Pattern(regexp = "[A-Z]") String id) {
+	public ResponseEntity<String> getFoos(@Valid @RequestParam(required = true) @Pattern(regexp = "[A-Z]") String id) {
 		return ResponseEntity.ok("valid");
 	}
 
